@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Animated, Easing } from 'react-native';
+import {
+  Animated,
+  Easing
+} from 'react-native';
 import CircularProgress from './CircularProgress';
 const AnimatedProgress = Animated.createAnimatedComponent(CircularProgress);
 
 export default class AnimatedCircularProgress extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.instance = null;
     this.state = {
       fillAnimation: new Animated.Value(props.prefill),
     };
@@ -23,8 +27,7 @@ export default class AnimatedCircularProgress extends React.PureComponent {
   }
 
   reAnimate(prefill, toVal, dur, ease) {
-    this.setState(
-      {
+    this.setState({
         fillAnimation: new Animated.Value(prefill),
       },
       () => this.animate(toVal, dur, ease)
@@ -36,16 +39,20 @@ export default class AnimatedCircularProgress extends React.PureComponent {
     const duration = dur || this.props.duration;
     const easing = ease || this.props.easing;
     const useNativeDriver = this.props.useNativeDriver;
-    
-    const anim = Animated.timing(this.state.fillAnimation, {
+
+    this.instance = Animated.timing(this.state.fillAnimation, {
       useNativeDriver,
       toValue,
       easing,
       duration,
     });
-    anim.start(this.props.onAnimationComplete);
+    this.instance.start(this.props.onAnimationComplete);
 
-    return anim;
+    return this.instance;
+  }
+
+  getInstance() {
+    return this.instance;
   }
 
   animateColor() {
@@ -62,9 +69,22 @@ export default class AnimatedCircularProgress extends React.PureComponent {
   }
 
   render() {
-    const { fill, prefill, ...other } = this.props;
+    const {
+      fill,
+      prefill,
+      ...other
+    } = this.props;
 
-    return <AnimatedProgress {...other} fill={this.state.fillAnimation} tintColor={this.animateColor()} />;
+    return <AnimatedProgress {
+      ...other
+    }
+    fill = {
+      this.state.fillAnimation
+    }
+    tintColor = {
+      this.animateColor()
+    }
+    />;
   }
 }
 
