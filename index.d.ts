@@ -1,12 +1,12 @@
-declare module 'react-native-circular-progress' {
-  import * as React from 'react';
+declare module "react-native-circular-progress" {
+  import * as React from "react";
   import {
     Animated,
     Easing,
     ViewPropTypes,
     StyleProp,
-    ViewStyle
-  } from 'react-native';
+    ViewStyle,
+  } from "react-native";
 
   export interface AnimatedCircularProgressProps {
     /**
@@ -84,7 +84,7 @@ declare module 'react-native-circular-progress' {
      * @type {('butt' | 'round' | 'square')}
      * @default 'butt'
      */
-    lineCap?: 'butt' | 'round' | 'square';
+    lineCap?: "butt" | "round" | "square";
 
     /**
      * If you don't want a full circle, specify the arc angle
@@ -189,7 +189,11 @@ declare module 'react-native-circular-progress' {
      * @param {number} duration
      * @param {Function} ease
      */
-    animate: (toVal: number, duration: number, ease?: Function) => Animated.CompositeAnimation;
+    animate: (
+      toVal: number,
+      duration: number,
+      ease?: Function
+    ) => Animated.CompositeAnimation;
 
     /**
      * Re-run animation with a specified prefill-value
@@ -205,5 +209,7 @@ declare module 'react-native-circular-progress' {
       duration: number,
       ease?: Function
     ) => void;
+
+    getInstance: () => Animated.CompositeAnimation;
   }
 }
